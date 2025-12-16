@@ -1,0 +1,234 @@
+@page
+@model CalorieTracker.Pages.PreferencesModel
+@{
+    ViewData["Title"] = "Preferences";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="mb-4"><i class="bi bi-sliders text-primary"></i> Preferences</h2>
+
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-danger") alert-dismissible fade show">
+                    @Model.Message
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <form method="post">
+                <!-- Personal Information -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-person"></i> Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label">Nickname</label>
+                                <input asp-for="Nickname" type="text" class="form-control" placeholder="Enter your nickname" maxlength="50" required />
+                                <small class="text-muted">This will be displayed in the navigation bar</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Age</label>
+                                <input asp-for="Age" type="number" class="form-control" min="1" max="120" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Gender</label>
+                                <select asp-for="Gender" class="form-select" required>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Height (cm)</label>
+                                <input asp-for="Height" type="number" step="0.1" class="form-control" min="50" max="250" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Current Weight (kg)</label>
+                                <input asp-for="CurrentWeight" type="number" step="0.1" class="form-control" min="20" max="300" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Macro Limits -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Daily Macro Limits</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            <strong>Calorie Calculation:</strong> Protein (1g = 4 kcal) | Fat (1g = 9 kcal) | Carbs (1g = 4 kcal)
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    <i class="bi bi-egg-fried text-success"></i> Protein (g)
+                                </label>
+                                <input asp-for="MaxProtein" 
+                                       type="number" 
+                                       class="form-control" 
+                                       min="0" 
+                                       required 
+                                       onchange="calculateCalories()" />
+                                <small class="text-muted">
+                                    <span id="proteinCalories">0</span> kcal
+                                </small>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    <i class="bi bi-droplet text-warning"></i> Fat (g)
+                                </label>
+                                <input asp-for="MaxFat" 
+                                       type="number" 
+                                       class="form-control" 
+                                       min="0" 
+                                       required 
+                                       onchange="calculateCalories()" />
+                                <small class="text-muted">
+                                    <span id="fatCalories">0</span> kcal
+                                </small>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">
+                                    <i class="bi bi-lightning text-info"></i> Carbs (g)
+                                </label>
+                                <input asp-for="MaxCarb" 
+                                       type="number" 
+                                       class="form-control" 
+                                       min="0" 
+                                       required 
+                                       onchange="calculateCalories()" />
+                                <small class="text-muted">
+                                    <span id="carbCalories">0</span> kcal
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-dark rounded text-center">
+                            <h5 class="mb-2">Total Daily Calorie Goal</h5>
+                            <h2 class="text-primary mb-0">
+                                <i class="bi bi-fire"></i>
+                                <span id="totalCalories">@Model.CalculatedCalories</span> kcal
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a asp-page="/DailyLog" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i> Save Preferences
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function calculateCalories() {
+            const protein = parseInt(document.getElementById('MaxProtein').value) || 0;
+            const fat = parseInt(document.getElementById('MaxFat').value) || 0;
+            const carb = parseInt(document.getElementById('MaxCarb').value) || 0;
+
+            const proteinCal = protein * 4;
+            const fatCal = fat * 9;
+            const carbCal = carb * 4;
+            const total = proteinCal + fatCal + carbCal;
+
+            document.getElementById('proteinCalories').innerText = proteinCal;
+            document.getElementById('fatCalories').innerText = fatCal;
+            document.getElementById('carbCalories').innerText = carbCal;
+            
+            const totalElement = document.getElementById('totalCalories');
+            totalElement.innerText = total;
+            
+            // Add pulse animation when value changes
+            totalElement.parentElement.classList.add('pulse-once');
+            setTimeout(() => {
+                totalElement.parentElement.classList.remove('pulse-once');
+            }, 600);
+        }
+
+        // Calculate on page load
+        window.addEventListener('DOMContentLoaded', calculateCalories);
+        
+        // Add loading state to submit button
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Saving...';
+        });
+    </script>
+    
+    <style>
+        .card {
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(88, 166, 255, 0.25);
+            transform: scale(1.02);
+            transition: all 0.2s ease;
+        }
+        
+        @@keyframes pulseOnce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .pulse-once {
+            animation: pulseOnce 0.6s ease;
+        }
+        
+        .btn {
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+    </style>
+}
