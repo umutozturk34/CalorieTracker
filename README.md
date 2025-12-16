@@ -1,201 +1,177 @@
-# CalorieTracker ??
+🍎 CalorieTracker
 
 A modern calorie and nutrition tracking application built with ASP.NET Core 8 Razor Pages.
 
-## Features ?
+📌 Overview
 
-- ?? **Daily Nutrition Tracking** - Track your daily calorie intake and macros
-- ?? **Advanced Food Search** - Search through 300,000+ foods from USDA FoodData Central
-- ?? **AI-Powered Recommendations** - Get personalized food suggestions based on your remaining calories
-- ?? **User Profiles** - Customize your daily nutrition goals
-- ?? **Progress Monitoring** - Track your protein, fat, and carb intake with visual progress bars
-- ?? **Modern Dark UI** - Beautiful and responsive dark-themed interface
+CalorieTracker helps users track daily calorie intake, macronutrients, and receive AI-powered food recommendations.
+It integrates with USDA FoodData Central for accurate food data and OpenAI for personalized suggestions.
 
-## Technologies Used ???
+✨ Features
 
-- **ASP.NET Core 8** - Razor Pages
-- **Entity Framework Core** - SQLite database
-- **ASP.NET Core Identity** - User authentication and authorization
-- **Bootstrap 5** - Responsive UI framework
-- **Bootstrap Icons** - Icon library
-- **USDA FoodData Central API** - Food database
-- **OpenAI API** - AI recommendations
-- **DotNetEnv** - Environment variable management
+🥗 Daily Nutrition Tracking – Track calories, protein, fat, and carbohydrates per day
 
-## Prerequisites ??
+🔍 Advanced Food Search – Search over 300,000+ foods from USDA FoodData Central
 
-- .NET 8 SDK
-- Visual Studio 2022 or VS Code
-- USDA API Key (free from [FoodData Central](https://fdc.nal.usda.gov/api-key-signup.html))
-- OpenAI API Key (from [OpenAI Platform](https://platform.openai.com/api-keys))
+🤖 AI-Powered Recommendations – Personalized food suggestions based on remaining calories & macros
 
-## Installation ??
+👤 User Profiles – Custom daily nutrition goals per user
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/CalorieTracker.git
-   cd CalorieTracker
-   ```
+📊 Progress Monitoring – Visual progress bars for macros
 
-2. **Configure API Keys with .env file** ? **RECOMMENDED**
+🌙 Modern Dark UI – Responsive, dark-themed interface using Bootstrap 5
 
-   Copy the `.env.example` file to `.env` in the CalorieTracker directory:
-   
-   ```bash
-   cd CalorieTracker
-   cp .env.example .env
-   ```
+🛠️ Technologies Used
 
-   Then edit `.env` and add your API keys:
-   
-   ```env
-   # USDA FoodData Central API Key
-   USDA_API_KEY=your_usda_api_key_here
-   
-   # OpenAI API Key
-   OPENAI_API_KEY=your_openai_api_key_here
-   
-   # Database Connection (default is fine for most cases)
-   CONNECTION_STRING=Data Source=CalorieTracker.db
-   ```
+ASP.NET Core 8 – Razor Pages
 
-   **?? IMPORTANT:** Never commit the `.env` file to Git! It's already in `.gitignore`.
+Entity Framework Core – SQLite
 
-3. **Restore packages**
-   ```bash
-   dotnet restore
-   ```
+ASP.NET Core Identity – Authentication & Authorization
 
-4. **Apply Database Migrations**
-   ```bash
-   dotnet ef database update
-   ```
+Bootstrap 5 – UI framework
 
-5. **Run the Application**
-   ```bash
-   dotnet run
-   ```
+Bootstrap Icons – Icon library
 
-   The application will be available at `https://localhost:5001` or `http://localhost:5000`
+USDA FoodData Central API – Food database
 
-## Getting API Keys ??
+OpenAI API – AI recommendations
 
-### USDA FoodData Central API (FREE)
-1. Go to [https://fdc.nal.usda.gov/api-key-signup.html](https://fdc.nal.usda.gov/api-key-signup.html)
-2. Fill out the registration form
-3. Check your email for the API key
-4. Copy the key to your `.env` file
+DotNetEnv – Environment variable management
 
-### OpenAI API (PAID)
-1. Create an account at [https://platform.openai.com/](https://platform.openai.com/)
-2. Add billing information (required for API access)
-3. Go to [API Keys](https://platform.openai.com/api-keys)
-4. Click "Create new secret key"
-5. Copy the key immediately to your `.env` file (you won't see it again!)
+✅ Prerequisites
 
-**Note:** OpenAI API uses the `gpt-4o-mini` model which costs approximately $0.0001 per recommendation.
+.NET 8 SDK
 
-## Project Structure ??
+Visual Studio 2022 or VS Code
 
-```
+USDA API Key
+
+OpenAI API Key
+
+🚀 Installation
+Clone the Repository
+
+git clone https://github.com/yourusername/CalorieTracker.git
+
+cd CalorieTracker
+
+Configure Environment Variables
+
+Copy .env.example to .env and edit it:
+
+USDA_API_KEY=your_usda_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+CONNECTION_STRING=Data Source=CalorieTracker.db
+
+Restore Packages
+
+dotnet restore
+
+Apply Database Migrations
+
+dotnet ef database update
+
+Run the Application
+
+dotnet run
+
+Application will be available at:
+https://localhost:5001
+ or http://localhost:5000
+
+🔑 Getting API Keys
+USDA FoodData Central
+
+https://fdc.nal.usda.gov/api-key-signup.html
+
+OpenAI API
+
+https://platform.openai.com/api-keys
+
+Uses gpt-4o-mini (~$0.0001 per recommendation)
+
+🗂️ Project Structure
+
 CalorieTracker/
-??? Data/
-?   ??? ApplicationDbContext.cs
-??? Models/
-?   ??? ApplicationUser.cs
-?   ??? DailyLog.cs
-?   ??? FoodItem.cs
-?   ??? ViewModels/
-??? Pages/
-?   ??? Account/
-?   ?   ??? Login.cshtml
-?   ?   ??? Register.cshtml
-?   ?   ??? Logout.cshtml
-?   ??? DailyLog.cshtml
-?   ??? SearchFood.cshtml
-?   ??? Preferences.cshtml
-?   ??? Index.cshtml
-??? Services/
-?   ??? FoodApiService.cs
-?   ??? OpenAIService.cs
-??? .env.example          # Template for environment variables
-??? .gitignore           # Protects .env from being committed
-??? Program.cs
-```
+├── Data/
+│ └── ApplicationDbContext.cs
+├── Models/
+│ ├── ApplicationUser.cs
+│ ├── DailyLog.cs
+│ ├── FoodItem.cs
+│ └── ViewModels/
+├── Pages/
+│ ├── Account/
+│ │ ├── Login.cshtml
+│ │ ├── Register.cshtml
+│ │ └── Logout.cshtml
+│ ├── DailyLog.cshtml
+│ ├── SearchFood.cshtml
+│ ├── Preferences.cshtml
+│ └── Index.cshtml
+├── Services/
+│ ├── FoodApiService.cs
+│ └── OpenAIService.cs
+├── .env.example
+├── .gitignore
+└── Program.cs
 
-## Usage ??
+📘 Usage
 
-1. **Register/Login** - Create an account or sign in
-2. **Set Your Goals** - Go to Preferences to set your daily nutrition targets
-3. **Track Your Meals** - Use the Daily Tracker to search and add foods
-4. **Get AI Recommendations** - Click on the recommendation buttons for personalized suggestions
-5. **Advanced Search** - Use Food Search for detailed food information
+Register or log in
 
-## Security ??
+Set daily nutrition goals
 
-? **API Keys Protected:**
-- API keys are stored in `.env` file (not committed to Git)
-- `.env` is in `.gitignore` by default
-- `.env.example` provides a template without actual keys
+Track meals
 
-? **Database Security:**
-- SQLite database is excluded from Git
-- Passwords hashed using ASP.NET Core Identity
+Get AI recommendations
 
-? **Application Security:**
-- HTTPS enforced in production
-- SQL injection protection via Entity Framework Core
-- CSRF protection enabled
+Search foods
 
-## Environment Variables ??
+🔐 Security
 
-| Variable | Description | Required | Example |
-|----------|-------------|----------|---------|
-| `USDA_API_KEY` | USDA FoodData Central API key | Yes | `abc123...` |
-| `OPENAI_API_KEY` | OpenAI API key | Yes | `sk-proj-...` |
-| `CONNECTION_STRING` | Database connection string | No | `Data Source=CalorieTracker.db` |
+API keys stored in .env
 
-## Troubleshooting ??
+SQLite database excluded from Git
 
-### "API key not configured" Error
-- Make sure `.env` file exists in the `CalorieTracker` directory
-- Check that your API keys are correctly copied (no extra spaces)
-- Restart the application after changing `.env`
+Passwords hashed with ASP.NET Core Identity
 
-### Food Search Not Working
-- Verify your USDA API key at [FoodData Central](https://fdc.nal.usda.gov/)
-- Check if you've exceeded the rate limit (1000 requests/hour for free tier)
+HTTPS, CSRF, and EF Core protections enabled
 
-### AI Recommendations Not Working
-- Verify your OpenAI API key at [OpenAI Platform](https://platform.openai.com/api-keys)
-- Ensure billing is set up on your OpenAI account
-- Check if you have available credits
+🌱 Environment Variables
 
-## Contributing ??
+USDA_API_KEY – Required
+OPENAI_API_KEY – Required
+CONNECTION_STRING – Optional
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+🧩 Troubleshooting
 
-**Before contributing:**
-1. Never commit `.env` file
-2. Use `.env.example` to document new environment variables
-3. Follow existing code style and patterns
+API key not configured: check .env and restart
 
-## License ??
+Food search not working: verify USDA key and limits
 
-This project is licensed under the MIT License.
+AI not working: check OpenAI billing
 
-## Acknowledgments ??
+🤝 Contributing
 
-- [USDA FoodData Central](https://fdc.nal.usda.gov/) - Food database
-- [OpenAI](https://openai.com/) - AI recommendations
-- [Bootstrap](https://getbootstrap.com/) - UI framework
-- [Bootstrap Icons](https://icons.getbootstrap.com/) - Icon library
-- [DotNetEnv](https://github.com/tonerdo/dotnet-env) - Environment variable management
+Pull requests are welcome.
+Do not commit .env.
 
-## Contact ??
+📄 License
 
-For questions or support, please open an issue on GitHub.
+MIT License
 
----
+🙏 Acknowledgments
 
-Made with ?? using ASP.NET Core 8
+USDA FoodData Central
+OpenAI
+Bootstrap
+Bootstrap Icons
+DotNetEnv
+
+📬 Contact
+
+Open a GitHub issue for support.
+
+Made with ❤️ using ASP.NET Core 8
